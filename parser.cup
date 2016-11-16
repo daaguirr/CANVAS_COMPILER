@@ -1,0 +1,63 @@
+package cup.example;
+
+import java_cup.runtime.*;
+import cup.example.Lexer;
+import java.io.IOException;
+import java.io.File;
+import java.io.FileInputStream;
+
+parser code {:
+  protected Lexer lexer;
+:}
+
+
+/* define how to connect to the scanner! */
+init with {:
+  ComplexSymbolFactory f = new ComplexSymbolFactory();
+  symbolFactory = f;
+  File file = new File("input.txt");
+  FileInputStream fis = null;
+  try {
+    fis = new FileInputStream(file);
+  } catch (IOException e) {
+    e.printStackTrace();
+  } 
+  lexer = new Lexer(f,fis);
+:};
+scan with {: return lexer.next_token(); :};
+
+
+terminal IF, WHILE , THEN , ELSE ,BAJARP, SUBIRP , COLORP, DIRP , DO, 
+	AVAZ , TABCOL , BRD , PLUMADIR , PLUMACOL, PLUMAUP, PLUMADOWN ,AND, OR, NOT, SEMI, CORL, CORR;
+		
+terminal Character c;
+terminal Integer digit;
+terminal Character d;
+
+non terminal expr;
+non terminal op;
+non terminal num;
+
+expr ::= 	TABCOL c:c1 
+			| BRD
+			| PLUMADIR d:d1 
+			| PLUMACOL c:c1
+			| PLUMAUP
+			| PLUMADOWN 
+			| expr:e1 AND expr:e2 
+			| expr:e1 OR expr:e2 
+			| NOT expr:e1
+			;
+			
+op 	::= 	BAJARP 
+			| SUBIRP 
+			| COLORP c:c1 
+			| DIRP d:d1 
+			| AVAZ num:num1 
+			| IF expr:e1 THEN CORL op:o1 CORR 
+			| IF expr:e1 THEN CORL op:o1 CORR ELSE CORL op:o2 CORR 
+			| WHILE expr:e1 DO CORL op:o1 CORR 
+			| op:o1 SEMI op:o2
+			;
+				
+
