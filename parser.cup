@@ -28,18 +28,18 @@ scan with {: return lexer.next_token(); :};
 
 
 terminal IF, WHILE , THEN , ELSE ,BAJARP, SUBIRP , COLORP, DIRP , DO, 
-	AVAZ , TABCOL , BRD , PLUMADIR , PLUMACOL, PLUMAUP, PLUMADOWN ,AND, OR, NOT, SEMI, CORL, CORR;
+	AVAZ , TABCOL , BORDE , PLUMADIR , PLUMACOL, PLUMAUP, PLUMADOWN ,AND, OR, NOT, SEMI, BRACKETL, BRACKETR;
 		
 terminal Character c;
 terminal Integer digit;
 terminal Character d;
+terminal Integer num;
 
 non terminal expr;
 non terminal op;
-non terminal num;
 
 expr ::= 	TABCOL c:c1 
-			| BRD
+			| BORDE	{: System.out.println("borde"); :}
 			| PLUMADIR d:d1 
 			| PLUMACOL c:c1
 			| PLUMAUP
@@ -49,15 +49,15 @@ expr ::= 	TABCOL c:c1
 			| NOT expr:e1
 			;
 			
-op 	::= 	BAJARP 
+op 	::= 	BAJARP {: System.out.println("bajar-pluma"); :}
 			| SUBIRP 
 			| COLORP c:c1 
 			| DIRP d:d1 
 			| AVAZ num:num1 
-			| IF expr:e1 THEN CORL op:o1 CORR 
-			| IF expr:e1 THEN CORL op:o1 CORR ELSE CORL op:o2 CORR 
-			| WHILE expr:e1 DO CORL op:o1 CORR 
+			| IF expr:e1 THEN BRACKETL op:o1 BRACKETR 
+			| IF expr:e1 THEN BRACKETL op:o1 BRACKETR ELSE BRACKETL op:o2 BRACKETR 
+			| WHILE expr:e1 DO BRACKETL op:o1 BRACKETR {: System.out.println(e1); :}
 			| op:o1 SEMI op:o2
 			;
-				
+
 

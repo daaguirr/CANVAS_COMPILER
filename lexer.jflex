@@ -77,15 +77,29 @@ ident = ([:jletter:] | "_" ) ([:jletterdigit:] | [:jletter:] | "_" )*
 
 <YYINITIAL> {
 
-  {Whitespace} {                              }
-  ";"          { return symbolFactory.newSymbol("SEMI", SEMI); }
-  "+"          { return symbolFactory.newSymbol("PLUS", PLUS); }
-  "-"          { return symbolFactory.newSymbol("MINUS", MINUS); }
-  "*"          { return symbolFactory.newSymbol("TIMES", TIMES); }
-  "n"          { return symbolFactory.newSymbol("UMINUS", UMINUS); }
-  "("          { return symbolFactory.newSymbol("LPAREN", LPAREN); }
-  ")"          { return symbolFactory.newSymbol("RPAREN", RPAREN); }
-  {Number}     { return symbolFactory.newSymbol("NUMBER", NUMBER, Integer.parseInt(yytext())); }
+  {Whitespace} 		{                              							}
+  ";"          		{ return symbol(sym.SEMI); 		}
+  "if"		   		{ return symbol(sym.IF);     		}
+  "then"	   		{ return symbol(sym.THEN); 		}
+  "else"	   		{ return symbol(sym.ELSE);  		}
+  "while"			{ return symbol(sym.WHILE);		}
+  "do"				{ return symbol("DO",sym.DO);				}
+  "bajar-pluma"		{ return symbol(sym.BAJARP);		}
+  "levantar-pluma"	{ return symbol(sym.SUBIRP);		}
+  "color-pluma"		{ return symbol(sym.COLORP);		}
+  "direccion-pluma"	{ return symbol(sym.DIRP);			}
+  "avanzar"			{ return symbol(sym.AVAZ);			}
+  "pluma-dir"		{ return symbol(sym.PLUMAD);		}
+  "pluma-col"		{ return symbol(sym.PLUMACOL);	}
+  "pluma-arriba"	{ return symbol(sym.PLUMAUP);	}
+  "pluma-abajo"		{ return symbol(sym.PLUMADOWN);}
+  "and"				{ return symbol(sym.AND);			}
+  "or"				{ return symbol(sym.OR);				}
+  "not"				{ return symbol(sym.NOT);			}
+  "borde"			{ return symbol(sym.BORDE);		}
+  "{"				{ return symbol(sym.BRACKETL);  }
+  "}"				{ return symbol( sym.BRACKETR);}
+  {Number}     		{ return symbolFactory.newSymbol("num", num, Integer.parseInt(yytext())); }
 }
 
 
