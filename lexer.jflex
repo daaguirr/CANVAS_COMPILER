@@ -6,14 +6,11 @@ import java.lang.*;
 import java.io.InputStreamReader;
 
 %%
-
 %class Lexer
-%implements sym
-%public
 %unicode
+%cup
 %line
 %column
-%cup
 %char
 %{
 	
@@ -59,50 +56,48 @@ Whitespace = [ \t\f] | {Newline}
 Number     = [0-9]+
 
 /* comments */
-Comment = {TraditionalComment} | {EndOfLineComment}
-TraditionalComment = "/*" {CommentContent} \*+ "/"
-EndOfLineComment = "//" [^\r\n]* {Newline}
-CommentContent = ( [^*] | \*+[^*/] )*
+Comment = {TraditionalComment} | {EndOfLineComment} | {DocumentationComment}
 
-ident = ([:jletter:] | "_" ) ([:jletterdigit:] | [:jletter:] | "_" )*
+TraditionalComment   = "/*" [^*] ~"*/" | "/*" "*"+ "/"
+// Comment can be the last line of the file, without line terminator.
+EndOfLineComment     = "//" {InputCharacter}* {LineTerminator}?
+DocumentationComment = "/**" {CommentContent} "*"+ "/"
+CommentContent       = ( [^*] | \*+ [^/*] )*
 
+Identifier = [:jletter:] [:jletterdigit:]*
 
-%eofval{
-    return symbolFactory.newSymbol("EOF",sym.EOF);
-%eofval}
+num = 0 | [1-9][0-9]*
 
-%state CODESEG
+%state STRING
+%%
 
-%%  
-
-<YYINITIAL> {
-
-  {Whitespace} 		{                              							}
-  ";"          		{ return symbol(sym.SEMI); 		}
-  "if"		   		{ return symbol(sym.IF);     		}
-  "then"	   		{ return symbol(sym.THEN); 		}
-  "else"	   		{ return symbol(sym.ELSE);  		}
-  "while"			{ return symbol(sym.WHILE);		}
-  "do"				{ return symbol("DO",sym.DO);				}
-  "bajar-pluma"		{ return symbol(sym.BAJARP);		}
-  "levantar-pluma"	{ return symbol(sym.SUBIRP);		}
-  "color-pluma"		{ return symbol(sym.COLORP);		}
-  "direccion-pluma"	{ return symbol(sym.DIRP);			}
-  "avanzar"			{ return symbol(sym.AVAZ);			}
-  "pluma-dir"		{ return symbol(sym.PLUMAD);		}
-  "pluma-col"		{ return symbol(sym.PLUMACOL);	}
-  "pluma-arriba"	{ return symbol(sym.PLUMAUP);	}
-  "pluma-abajo"		{ return symbol(sym.PLUMADOWN);}
-  "and"				{ return symbol(sym.AND);			}
-  "or"				{ return symbol(sym.OR);				}
-  "not"				{ return symbol(sym.NOT);			}
-  "borde"			{ return symbol(sym.BORDE);		}
-  "{"				{ return symbol(sym.BRACKETL);  }
-  "}"				{ return symbol( sym.BRACKETR);}
-  {Number}     		{ return symbolFactory.newSymbol("num", num, Integer.parseInt(yytext())); }
+<YYINITIAL>	{
+	{Whitespace} 		{		                            						}
+	";"          		{ return symbolFactory.newSymbol("SEMI",sym.SEMI); 			}
+	"if"		   		{ return symbolFactory.newSymbol("IF",sym.IF);     			}
+	"then"	   			{ return symbolFactory.newSymbol("THEN",sym.THEN); 			}
+	"else"	   			{ return symbolFactory.newSymbol("ELSE",sym.ELSE);  		}
+	"while"				{ return symbolFactory.newSymbol("WHILE",sym.WHILE);		}
+	"do"				{ return symbolFactory.newSymbol("DO",sym.DO);				}
+	"bajar-pluma"		{ return symbolFactory.newSymbol("BAJARP",sym.BAJARP);		}
+	"levantar-pluma"	{ return symbolFactory.newSymbol("SUBIRP",sym.SUBIRP);		}
+	"color-pluma"		{ return symbolFactory.newSymbol("COLORP",sym.COLORP);		}
+	"direccion-pluma"	{ return symbolFactory.newSymbol("DIRP",sym.DIRP);			}
+	"avanzar"			{ return symbolFactory.newSymbol("AVAZ",sym.AVAZ);			}
+	"pluma-dir"			{ return symbolFactory.newSymbol("PLUMADIR",sym.PLUMADIR);	}
+	"pluma-col"			{ return symbolFactory.newSymbol("PLUMACOL",sym.PLUMACOL);	}
+	"pluma-arriba"		{ return symbolFactory.newSymbol("PLUMAUP",sym.PLUMAUP);	}
+	"pluma-abajo"		{ return symbolFactory.newSymbol("PLUMADOWN",sym.PLUMADOWN);}
+	"and"				{ return symbolFactory.newSymbol("AND",sym.AND);			}
+	"or"				{ return symbolFactory.newSymbol("OR",sym.OR);				}
+	"not"				{ return symbolFactory.newSymbol("NOT",sym.NOT);			}
+	"borde"				{ return symbolFactory.newSymbol("BORDE",sym.BORDE);		}
+	"{"					{ return symbolFactory.newSymbol("BRACKETL",sym.BRACKETL);  }
+	"}"					{ return symbolFactory.newSymbol("BRACKETR" ,sym.BRACKETR);	}
+	{Number}     		{ return symbolFactory.newSymbol("num", sym.num, Integer.parseInt(yytext())); }
 }
 
 
 
-// error fallback
-.|\n          { emit_warning("Unrecognized character '" +yytext()+"' -- ignored"); }
+[^]                 { throw new Error("Illegal character <"+
+                                                        yytext()+">"); }

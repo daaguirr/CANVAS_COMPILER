@@ -1,1 +1,1 @@
-WHILE(borde) DO <bajar-pluma>;
+while borde do { bajar-pluma; }

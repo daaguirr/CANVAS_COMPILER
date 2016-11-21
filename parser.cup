@@ -6,58 +6,63 @@ import java.io.IOException;
 import java.io.File;
 import java.io.FileInputStream;
 
-parser code {:
-  protected Lexer lexer;
-:}
+parser code {: protected Lexer lexer; :}
 
-
-/* define how to connect to the scanner! */
-init with {:
-  ComplexSymbolFactory f = new ComplexSymbolFactory();
-  symbolFactory = f;
-  File file = new File("input.txt");
-  FileInputStream fis = null;
-  try {
-    fis = new FileInputStream(file);
-  } catch (IOException e) {
-    e.printStackTrace();
-  } 
-  lexer = new Lexer(f,fis);
+init with {: 
+	ComplexSymbolFactory f = new ComplexSymbolFactory(); 
+	symbolFactory = f;
+	File file = new File("input.txt");  
+	FileInputStream fis = null;
+	try {
+		fis = new FileInputStream(file);
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
+	lexer = new Lexer(f,fis); 
 :};
+
 scan with {: return lexer.next_token(); :};
 
-
-terminal IF, WHILE , THEN , ELSE ,BAJARP, SUBIRP , COLORP, DIRP , DO, 
-	AVAZ , TABCOL , BORDE , PLUMADIR , PLUMACOL, PLUMAUP, PLUMADOWN ,AND, OR, NOT, SEMI, BRACKETL, BRACKETR;
+terminal IF, WHILE , THEN , ELSE ,BAJARP, SUBIRP , COLORP, DIRP , DO;
+terminal AVAZ , TABCOL , BORDE , PLUMADIR , PLUMACOL, PLUMAUP, PLUMADOWN ,AND, OR;
+terminal NOT, SEMI, BRACKETL, BRACKETR;
 		
 terminal Character c;
-terminal Integer digit;
 terminal Character d;
 terminal Integer num;
 
 non terminal expr;
 non terminal op;
+non terminal expr_list;
 
-expr ::= 	TABCOL c:c1 
+precedence left AND;
+precedence left OR;
+
+
+  
+expr ::= 	TABCOL c:c1 {:;:}
 			| BORDE	{: System.out.println("borde"); :}
-			| PLUMADIR d:d1 
-			| PLUMACOL c:c1
-			| PLUMAUP
-			| PLUMADOWN 
-			| expr:e1 AND expr:e2 
-			| expr:e1 OR expr:e2 
-			| NOT expr:e1
+			| PLUMADIR d:d1 {:;:}
+			| PLUMACOL c:c1 {:;:}
+			| PLUMAUP {:;:}
+			| PLUMADOWN {:;:}
+			| expr:e1 AND expr:e2 {:;:}
+			| expr:e1 OR expr:e2 {:;:}
+			| NOT expr:e1 {:;:}
 			;
-			
+
+expr_list ::= expr_list expr:e SEMI         {: System.out.println(e); :}
+            | expr:e SEMI                   {: System.out.println(e); :}
+            ;		
 op 	::= 	BAJARP {: System.out.println("bajar-pluma"); :}
-			| SUBIRP 
-			| COLORP c:c1 
-			| DIRP d:d1 
-			| AVAZ num:num1 
-			| IF expr:e1 THEN BRACKETL op:o1 BRACKETR 
-			| IF expr:e1 THEN BRACKETL op:o1 BRACKETR ELSE BRACKETL op:o2 BRACKETR 
+			| SUBIRP {:;:}
+			| COLORP c:c1 {:;:} 
+			| DIRP d:d1 {:;:}
+			| AVAZ num:num1 {:;:}
+			| IF expr:e1 THEN BRACKETL op:o1 BRACKETR {:;:}
+			| IF expr:e1 THEN BRACKETL op:o1 BRACKETR ELSE BRACKETL op:o2 BRACKETR {:;:}
 			| WHILE expr:e1 DO BRACKETL op:o1 BRACKETR {: System.out.println(e1); :}
-			| op:o1 SEMI op:o2
+			| op:o1 SEMI op:o2 {:;:}
 			;
 
 
