@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 
 %%
 %class Lexer
+%implements sym
 %unicode
 %cup
 %line
@@ -26,7 +27,6 @@ import java.io.InputStreamReader;
     
     private StringBuffer sb;
     private ComplexSymbolFactory symbolFactory;
-    private int csline,cscolumn;
 
     public Symbol symbol(String name, int code){
 		return symbolFactory.newSymbol(name, code,
@@ -35,6 +35,11 @@ import java.io.InputStreamReader;
 				);
     }
     public Symbol symbol(String name, int code, String lexem){
+	return symbolFactory.newSymbol(name, code, 
+						new Location(yyline+1, yycolumn +1, yychar), 
+						new Location(yyline+1,yycolumn+yylength(), yychar+yylength()), lexem);
+    }
+    public Symbol symbol(String name, int code, int lexem){
 	return symbolFactory.newSymbol(name, code, 
 						new Location(yyline+1, yycolumn +1, yychar), 
 						new Location(yyline+1,yycolumn+yylength(), yychar+yylength()), lexem);
@@ -68,33 +73,36 @@ Identifier = [:jletter:] [:jletterdigit:]*
 
 num = 0 | [1-9][0-9]*
 
-%state STRING
+%eofval{
+	return symbol("EOF",EOF);
+%eofval}
+
 %%
 
 <YYINITIAL>	{
 	{Whitespace} 		{		                            						}
-	";"          		{ return symbolFactory.newSymbol("SEMI",sym.SEMI); 			}
-	"if"		   		{ return symbolFactory.newSymbol("IF",sym.IF);     			}
-	"then"	   			{ return symbolFactory.newSymbol("THEN",sym.THEN); 			}
-	"else"	   			{ return symbolFactory.newSymbol("ELSE",sym.ELSE);  		}
-	"while"				{ return symbolFactory.newSymbol("WHILE",sym.WHILE);		}
-	"do"				{ return symbolFactory.newSymbol("DO",sym.DO);				}
-	"bajar-pluma"		{ return symbolFactory.newSymbol("BAJARP",sym.BAJARP);		}
-	"levantar-pluma"	{ return symbolFactory.newSymbol("SUBIRP",sym.SUBIRP);		}
-	"color-pluma"		{ return symbolFactory.newSymbol("COLORP",sym.COLORP);		}
-	"direccion-pluma"	{ return symbolFactory.newSymbol("DIRP",sym.DIRP);			}
-	"avanzar"			{ return symbolFactory.newSymbol("AVAZ",sym.AVAZ);			}
-	"pluma-dir"			{ return symbolFactory.newSymbol("PLUMADIR",sym.PLUMADIR);	}
-	"pluma-col"			{ return symbolFactory.newSymbol("PLUMACOL",sym.PLUMACOL);	}
-	"pluma-arriba"		{ return symbolFactory.newSymbol("PLUMAUP",sym.PLUMAUP);	}
-	"pluma-abajo"		{ return symbolFactory.newSymbol("PLUMADOWN",sym.PLUMADOWN);}
-	"and"				{ return symbolFactory.newSymbol("AND",sym.AND);			}
-	"or"				{ return symbolFactory.newSymbol("OR",sym.OR);				}
-	"not"				{ return symbolFactory.newSymbol("NOT",sym.NOT);			}
-	"borde"				{ return symbolFactory.newSymbol("BORDE",sym.BORDE);		}
-	"{"					{ return symbolFactory.newSymbol("BRACKETL",sym.BRACKETL);  }
-	"}"					{ return symbolFactory.newSymbol("BRACKETR" ,sym.BRACKETR);	}
-	{Number}     		{ return symbolFactory.newSymbol("num", sym.num, Integer.parseInt(yytext())); }
+	";"          		{ return symbol("SEMI",sym.SEMI); 			}
+	"if"		   		{ return symbol("IF",sym.IF);     			}
+	"then"	   			{ return symbol("THEN",sym.THEN); 			}
+	"else"	   			{ return symbol("ELSE",sym.ELSE);  		}
+	"while"				{ return symbol("WHILE",sym.WHILE);		}
+	"do"				{ return symbol("DO",sym.DO);				}
+	"bajar-pluma"		{ return symbol("BAJARP",sym.BAJARP);		}
+	"levantar-pluma"	{ return symbol("SUBIRP",sym.SUBIRP);		}
+	"color-pluma"		{ return symbol("COLORP",sym.COLORP);		}
+	"direccion-pluma"	{ return symbol("DIRP",sym.DIRP);			}
+	"avanzar"			{ return symbol("AVAZ",sym.AVAZ);			}
+	"pluma-dir"			{ return symbol("PLUMADIR",sym.PLUMADIR);	}
+	"pluma-col"			{ return symbol("PLUMACOL",sym.PLUMACOL);	}
+	"pluma-arriba"		{ return symbol("PLUMAUP",sym.PLUMAUP);	}
+	"pluma-abajo"		{ return symbol("PLUMADOWN",sym.PLUMADOWN);}
+	"and"				{ return symbol("AND",sym.AND);			}
+	"or"				{ return symbol("OR",sym.OR);				}
+	"not"				{ return symbol("NOT",sym.NOT);			}
+	"borde"				{ return symbol("BORDE",sym.BORDE);		}
+	"{"					{ return symbol("BRACKETL",sym.BRACKETL);  }
+	"}"					{ return symbol("BRACKETR" ,sym.BRACKETR);	}
+	{Number}     		{ return symbol("num", sym.num, Integer.parseInt(yytext())); }
 }
 
 

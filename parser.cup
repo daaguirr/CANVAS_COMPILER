@@ -31,15 +31,25 @@ terminal Character c;
 terminal Character d;
 terminal Integer num;
 
-non terminal expr;
-non terminal op;
-non terminal expr_list;
+non terminal op, expr;
 
+precedence left SEMI;
 precedence left AND;
 precedence left OR;
 
-
+start with op;
   
+op 	::= 	BAJARP {: System.out.println("bajar-pluma"); :}
+			| SUBIRP {:;:}
+			| COLORP c:c1 {:;:} 
+			| DIRP d:d1 {:;:}
+			| AVAZ num:num1 {:;:}
+			| IF expr:e1 THEN BRACKETL op:o1 BRACKETR {:;:}
+			| IF expr:e1 THEN BRACKETL op:o1 BRACKETR ELSE BRACKETL op:o2 BRACKETR {:;:}
+			| WHILE expr:e1 DO BRACKETL op:o1 BRACKETR {: System.out.println(e1); :}
+			| op:o1 SEMI op:o2 {:;:}
+			;
+
 expr ::= 	TABCOL c:c1 {:;:}
 			| BORDE	{: System.out.println("borde"); :}
 			| PLUMADIR d:d1 {:;:}
@@ -51,18 +61,6 @@ expr ::= 	TABCOL c:c1 {:;:}
 			| NOT expr:e1 {:;:}
 			;
 
-expr_list ::= expr_list expr:e SEMI         {: System.out.println(e); :}
-            | expr:e SEMI                   {: System.out.println(e); :}
-            ;		
-op 	::= 	BAJARP {: System.out.println("bajar-pluma"); :}
-			| SUBIRP {:;:}
-			| COLORP c:c1 {:;:} 
-			| DIRP d:d1 {:;:}
-			| AVAZ num:num1 {:;:}
-			| IF expr:e1 THEN BRACKETL op:o1 BRACKETR {:;:}
-			| IF expr:e1 THEN BRACKETL op:o1 BRACKETR ELSE BRACKETL op:o2 BRACKETR {:;:}
-			| WHILE expr:e1 DO BRACKETL op:o1 BRACKETR {: System.out.println(e1); :}
-			| op:o1 SEMI op:o2 {:;:}
-			;
+            
 
 

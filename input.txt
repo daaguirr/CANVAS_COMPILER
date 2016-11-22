@@ -1,1 +1,1 @@
-while borde do { bajar-pluma; }
+while borde do {bajar-pluma}
