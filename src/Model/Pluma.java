@@ -21,18 +21,18 @@ public class Pluma {
     isUp = true;
   }
   
-  public void setColor(char c) {
-    color = new Color(c);
+  public void setColor(Color color) {
+    this.color = color;
   }
   
-  public void setDirection(char d) {
-    direction = new Direction(d);
+  public void setDirection(Direction direction) {
+    this.direction = direction;
   }
   
   public void avanzar(int num, ITablero tablero) throws BordeException {
     if (is_down())
       for (int i = 0; i < num; ++i)
-        tablero.set_color(position.moved_by(direction.scaled_by(i)), color);
+        tablero.setColor(position.moved_by(direction.scaled_by(i)), color);
     
     position = position.moved_by(direction.scaled_by(num));
     if (!tablero.contains(position))
