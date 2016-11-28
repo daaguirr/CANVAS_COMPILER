@@ -178,6 +178,7 @@ public class Parser extends java_cup.runtime.lr_parser {
  
 	protected Lexer lexer;
 	Pluma pluma = new Pluma(); 
+	ITablero tablero = null;
 
 
 /** Cup generated class to encapsulate user supplied action code.*/
@@ -223,7 +224,7 @@ class CUP$Parser$actions {
             {
               Object RESULT =null;
 		//@@CUPDBG3
- System.out.println("bajar-pluma"); 
+ pluma.bajar(); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("op",0, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -233,7 +234,7 @@ class CUP$Parser$actions {
             {
               Object RESULT =null;
 		//@@CUPDBG4
-;
+pluma.levantar();
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("op",0, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -244,9 +245,9 @@ class CUP$Parser$actions {
               Object RESULT =null;
 		Location c1xleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location c1xright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
-		Character c1 = (Character)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		Color c1 = (Color)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		//@@CUPDBG5
-;
+pluma.setColor(c1);
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("op",0, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -257,9 +258,9 @@ class CUP$Parser$actions {
               Object RESULT =null;
 		Location d1xleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location d1xright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
-		Character d1 = (Character)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		Direction d1 = (Direction)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		//@@CUPDBG6
-;
+pluma.setDirection(d1);
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("op",0, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -272,7 +273,7 @@ class CUP$Parser$actions {
 		Location num1xright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		Integer num1 = (Integer)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		//@@CUPDBG7
-;
+pluma.avanzar(num1,tablero);
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("op",0, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -323,7 +324,7 @@ class CUP$Parser$actions {
 		Location o1xright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).xright;
 		Object o1 = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
 		//@@CUPDBG10
- System.out.println(e1); 
+  
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("op",0, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-5)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -350,7 +351,7 @@ class CUP$Parser$actions {
               IExpression RESULT =null;
 		Location c1xleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location c1xright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
-		Character c1 = (Character)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		Color c1 = (Color)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		//@@CUPDBG12
 ;
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("expr",1, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -362,7 +363,7 @@ class CUP$Parser$actions {
             {
               IExpression RESULT =null;
 		//@@CUPDBG13
-  
+
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("expr",1, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -373,7 +374,7 @@ class CUP$Parser$actions {
               IExpression RESULT =null;
 		Location d1xleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location d1xright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
-		Character d1 = (Character)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		Direction d1 = (Direction)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		//@@CUPDBG14
 ;
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("expr",1, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -386,7 +387,7 @@ class CUP$Parser$actions {
               IExpression RESULT =null;
 		Location c1xleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location c1xright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
-		Character c1 = (Character)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		Color c1 = (Color)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		//@@CUPDBG15
 ;
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("expr",1, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);

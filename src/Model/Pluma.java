@@ -30,7 +30,7 @@ public class Pluma {
   }
   
   public void avanzar(int num, ITablero tablero) throws BordeException {
-    if (is_down())
+    if (isDown())
       for (int i = 0; i < num; ++i)
         tablero.setColor(position.moved_by(direction.scaled_by(i)), color);
     
@@ -39,19 +39,19 @@ public class Pluma {
       throw new BordeException(position);
   }
   
-  public boolean has_color(char c) {
+  public boolean hasColor(char c) {
     return color.equals(new Color(c));
   }
   
-  public boolean has_direction(char d) {
+  public boolean hasDirection(char d) {
     return direction.equals(new Direction(d));
   }
   
-  public boolean is_up() {
+  public boolean isUp() {
     return isUp;
   }
   
-  public boolean is_down() {
+  public boolean isDown() {
     return !isUp;
   }
 }

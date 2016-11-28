@@ -10,6 +10,7 @@ import Model.*;
 parser code {: 
 	protected Lexer lexer;
 	Pluma pluma = new Pluma(); 
+	ITablero tablero = null;
 :}
 
 init with {: 
@@ -31,8 +32,8 @@ terminal IF, WHILE , THEN , ELSE ,BAJARP, SUBIRP , COLORP, DIRP , DO;
 terminal AVAZ , TABCOL , BORDE , PLUMADIR , PLUMACOL, PLUMAUP, PLUMADOWN ,AND, OR;
 terminal NOT, SEMI, BRACKETL, BRACKETR;
 		
-terminal Character c;
-terminal Character d;
+terminal Color c;
+terminal Direction d;
 terminal Integer num;
 
 non terminal op;
@@ -44,26 +45,26 @@ precedence left OR;
 
 start with op;
 
-op 	::= 	BAJARP {: pluma.bajar(); :}
-			| SUBIRP {:pluma.levantar();:}
-			| COLORP c:c1 {:;:} 
-			| DIRP d:d1 {:;:}
-			| AVAZ num:num1 {:;:}
+op 	::= 	BAJARP {: RESULT = new BajarPluma(); :}
+			| SUBIRP {: RESULT = new SubirPluma();:}
+			| COLORP c:c1 {:RESULT = new CambiarColor();:} 
+			| DIRP d:d1 {: RESULT = new CambiarDireccion();:}
+			| AVAZ num:num1 {:RESULT =  new Azanzar(num);:}
 			| IF expr:e1 THEN BRACKETL op:o1 BRACKETR {:;:}
 			| IF expr:e1 THEN BRACKETL op:o1 BRACKETR ELSE BRACKETL op:o2 BRACKETR {:;:}
-			| WHILE expr:e1 DO BRACKETL op:o1 BRACKETR {: System.out.println(e1); :}
+			| WHILE expr:e1 DO BRACKETL op:o1 BRACKETR {:  :}
 			| op:o1 SEMI op:o2 {:;:}
 			;
 
-expr ::= 	TABCOL c:c1 {:;:}
-			| BORDE	{:  :}
-			| PLUMADIR d:d1 {:;:}
-			| PLUMACOL c:c1 {:;:}
-			| PLUMAUP {:;:}
-			| PLUMADOWN {:;:}
+expr ::= 	TABCOL c:c1 {:RESULT = new TableroCol(c1);:}
+			| BORDE	{:RESULT = new Borde();:}
+			| PLUMADIR d:d1 {:RESULT = new PlumaDir(d1);:}
+			| PLUMACOL c:c1 {:RESULT = new PlumaCol(d2);:}
+			| PLUMAUP {:RESULT = new PlumaUp();:}
+			| PLUMADOWN {:RESULT = new PlumaDown();:}
 			| expr:e1 AND expr:e2 {:RESULT = new And(e1,e2);:}
 			| expr:e1 OR expr:e2 {:RESULT = new Or(e1,e2);:}
-			| NOT expr:e1 {:;:}
+			| NOT expr:e1 {:RESULT = Not(e1);:}
 			;
 
             
