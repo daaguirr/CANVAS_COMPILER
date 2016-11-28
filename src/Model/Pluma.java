@@ -21,11 +21,11 @@ public class Pluma {
     isUp = true;
   }
   
-  public void set_color(char c) {
+  public void setColor(char c) {
     color = new Color(c);
   }
   
-  public void set_direction(char d) {
+  public void setDirection(char d) {
     direction = new Direction(d);
   }
   
