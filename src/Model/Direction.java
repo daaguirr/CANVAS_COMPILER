@@ -1,9 +1,10 @@
 package Model;
 
-public class Direction extends Point {  
-  private static final long serialVersionUID = 1L;
-
+public class Direction extends Point {
   public static final Direction EAST = new Direction('E');
+  public static final Direction NORTH = new Direction('N');
+  public static final Direction SOUTH = new Direction('S');
+  public static final Direction WEST = new Direction('O');
   
   public Direction(char d) {
     super(get_x(d), get_y(d));
