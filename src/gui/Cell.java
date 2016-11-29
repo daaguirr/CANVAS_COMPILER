@@ -11,7 +11,7 @@ public class Cell extends Rectangle {
   
   public Cell() {
     super(SIZE, SIZE, Color.WHITE);
-    super.setStroke(Color.WHITE);
+    super.setStroke(Color.GRAY);
     super.setFill(fill);
     super.setOnMouseEntered((MouseEvent event) -> super.setFill(fill.darker()));
     super.setOnMouseExited((MouseEvent event) -> super.setFill(fill));

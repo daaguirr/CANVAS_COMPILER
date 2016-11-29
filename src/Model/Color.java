@@ -3,6 +3,10 @@ package Model;
 public class Color {
   private char id;
   
+  public static final Color BLACK = new Color('N');
+  public static final Color BLUE = new Color('A');
+  public static final Color GREEN = new Color('G');
+  public static final Color RED = new Color('R');
   public static final Color WHITE = new Color('B');
   
   public Color(char c) {
