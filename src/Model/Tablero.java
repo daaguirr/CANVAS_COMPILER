@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.Arrays;
 import java.util.Observable;
 
 public class Tablero extends Observable implements ITablero {
@@ -11,13 +12,8 @@ public class Tablero extends Observable implements ITablero {
     this.rows = height;
     this.columns = width;
     colorOf = new Color[rows][columns];
-    for (int row = 0; row < rows; ++row) {
-      for (int col = 0; col < columns; ++col) {
-        colorOf[row][col] = defaultColor;
-        setChanged();
-        notifyObservers(new ColorUpdate(new Position(row, col), defaultColor));
-      }
-    }
+    for (Color[] row : colorOf)
+      Arrays.fill(row, defaultColor);
   }
   
   @Override
@@ -49,5 +45,16 @@ public class Tablero extends Observable implements ITablero {
       sb.append(System.lineSeparator());
     }
     return sb.toString();
+  }
+
+  public void refresh() {
+    for (int row = 0; row < rows; ++row) {
+      for (int col = 0; col < columns; ++col) {
+        Position pos = new Position(row, col);
+        Color color = colorOf[row][col];
+        setChanged();
+        notifyObservers(new ColorUpdate(pos, color));
+      }
+    }
   }
 }

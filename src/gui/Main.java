@@ -18,6 +18,7 @@ public class Main extends Application {
     
     /*ast.Runtime*/ runtime = new ast.Runtime();
     runtime.tablero.addObserver(scene.canvas);
+    runtime.tablero.refresh();
     
     Parser parser = new Parser();
     parser.parse();
