@@ -21,7 +21,7 @@ public class Canvas extends GridPane implements Observer{
     for (int row = 0; row < rows; ++row) {
       for (int col = 0; col < columns; ++col) {
         cell[row][col] = new Cell();
-        super.add(cell[row][col], row, col);
+        super.add(cell[row][col], col, row);
       }
     }
   }
