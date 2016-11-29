@@ -1,10 +1,10 @@
 package Model;
 
 public class ColorUpdate {
-  private Point pto;
+  private Position pto;
   private Color color;
   
-  public ColorUpdate(Point pto, Color color){
+  public ColorUpdate(Position pto, Color color){
     this.setPto(pto);
     this.setColor(color);
   }
@@ -17,11 +17,11 @@ public class ColorUpdate {
     this.color = color;
   }
 
-  public Point getPto() {
+  public Position getPto() {
     return pto;
   }
 
-  public void setPto(Point pto) {
+  public void setPto(Position pto) {
     this.pto = pto;
   }
 }

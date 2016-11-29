@@ -1,13 +1,13 @@
 package Model;
 
 public class Pluma {
-  private Point position;
+  private Position position;
   private Color color;
   private boolean isUp;
-  private Point direction;
+  private Position direction;
   
   public Pluma() {
-    position = new Point(0, 49);
+    position = new Position(49, 0);
     color = Color.WHITE;
     isUp = true;
     direction = Direction.EAST;
@@ -29,7 +29,7 @@ public class Pluma {
     this.direction = direction;
   }
   
-  public Point getPosition() {
+  public Position getPosition() {
     return position;
   }
   

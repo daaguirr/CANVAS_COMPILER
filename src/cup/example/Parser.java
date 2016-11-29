@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.File;
 import java.io.FileInputStream;
 import ast.*;
+import gui.Main;
 import Model.Color;
 import Model.Direction;
 import java_cup.runtime.ComplexSymbolFactory.Location;
@@ -187,7 +188,7 @@ public class Parser extends java_cup.runtime.lr_parser {
 //@@CUPDBG0
  
 	protected Lexer lexer;
-	ast.Runtime rt = new ast.Runtime();
+	ast.Runtime rt = Main.runtime;
 
 
 /** Cup generated class to encapsulate user supplied action code.*/

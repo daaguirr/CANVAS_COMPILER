@@ -1,9 +1,9 @@
 package Model;
 
 public interface ITablero {
-  boolean contains(Point point);
+  boolean contains(Position point);
   
-  void setColor(Point point, Color color) throws BordeException;
+  void setColor(Position point, Color color) throws BordeException;
   
-  Color getColor(Point point);
+  Color getColor(Position point);
 }

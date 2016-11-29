@@ -1,7 +1,7 @@
 package ast;
 
 import Model.Color;
-import Model.Point;
+import Model.Position;
 
 public class TableroCol implements Expression {
   private Color desiredColor;
@@ -12,7 +12,7 @@ public class TableroCol implements Expression {
   
   @Override
   public boolean eval(Runtime runtime) {
-    Point position = runtime.pluma.getPosition();
+    Position position = runtime.pluma.getPosition();
     return runtime.tablero.getColor(position).equals(desiredColor);
   }
 }

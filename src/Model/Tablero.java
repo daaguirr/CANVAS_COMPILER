@@ -1,43 +1,51 @@
 package Model;
 
-import java.util.Arrays;
+import java.util.Observable;
 
-public class Tablero implements ITablero {
+public class Tablero extends Observable implements ITablero {
   private Color[][] colorOf;
-  private int width;
-  private int height;
+  private int rows;
+  private int columns;
   
   public Tablero(int width, int height, Color defaultColor) {
-    this.width = width;
-    this.height = height;
-    colorOf = new Color[width][height];
-    for (Color[] row : colorOf)
-      Arrays.fill(row, defaultColor);
+    this.rows = height;
+    this.columns = width;
+    colorOf = new Color[rows][columns];
+    for (int row = 0; row < rows; ++row) {
+      for (int col = 0; col < columns; ++col) {
+        colorOf[row][col] = defaultColor;
+        setChanged();
+        notifyObservers(new ColorUpdate(new Position(row, col), defaultColor));
+      }
+    }
   }
   
   @Override
-  public boolean contains(Point point) {
-    return 0 <= point.x && point.x < width
-        && 0 <= point.y && point.y < height;
+  public boolean contains(Position point) {
+    return 0 <= point.row && point.row < rows
+        && 0 <= point.col && point.col < columns;
   }
 
   @Override
-  public void setColor(Point point, Color color) throws BordeException {
-    if(!contains(point)) throw new BordeException(point);
-    colorOf[point.x][point.y] = color;
+  public void setColor(Position point, Color color) throws BordeException {
+    if (!contains(point))
+      throw new BordeException(point);
+    colorOf[point.row][point.col] = color;
+    setChanged();
+    notifyObservers(new ColorUpdate(point, color));
   }
 
   @Override
-  public Color getColor(Point point) {
-    return colorOf[point.x][point.y];
+  public Color getColor(Position point) {
+    return colorOf[point.row][point.col];
   }
   
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    for (int row = 0; row < height; ++row) {
-      for (int col = 0; col < width; ++col)
-        sb.append(colorOf[col][row].toChar());
+    for (int row = 0; row < rows; ++row) {
+      for (int col = 0; col < columns; ++col)
+        sb.append(colorOf[row][col].toChar());
       sb.append(System.lineSeparator());
     }
     return sb.toString();

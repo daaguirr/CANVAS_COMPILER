@@ -19,4 +19,9 @@ public class Cell extends Rectangle {
       ;
     });
   }
+  
+  public void setFill(Color fill) {
+    this.fill = fill;
+    super.setFill(fill);
+  }
 }

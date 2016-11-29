@@ -1,16 +1,16 @@
 package Model;
 
-public class Direction extends Point {
+public class Direction extends Position {
   public static final Direction EAST = new Direction('E');
   public static final Direction NORTH = new Direction('N');
   public static final Direction SOUTH = new Direction('S');
   public static final Direction WEST = new Direction('O');
   
   public Direction(char d) {
-    super(get_x(d), get_y(d));
+    super(get_row(d), get_col(d));
   }
   
-  private static int get_x(char d) {
+  private static int get_col(char d) {
     switch (d) {
       case 'S': return 0;
       case 'N': return 0;
@@ -21,7 +21,7 @@ public class Direction extends Point {
     }
   }
   
-  private static int get_y(char d) {
+  private static int get_row(char d) {
     switch (d) {
       case 'S': return 1;
       case 'N': return -1;
