@@ -1,5 +1,7 @@
 package ast;
 
+import Model.BordeException;
+
 public class While implements Statement {
   private Expression condition;
   private Statement action;
@@ -10,7 +12,7 @@ public class While implements Statement {
   }
   
   @Override
-  public void exec(Runtime runtime) {
+  public void exec(Runtime runtime) throws BordeException {
     while (condition.eval(runtime))
       action.exec(runtime);
   }

@@ -1,5 +1,7 @@
 package ast;
 
+import Model.BordeException;
+
 public class IfElse implements Statement {
   private Expression condition;
   private Statement ifTrue;
@@ -12,7 +14,7 @@ public class IfElse implements Statement {
   }
   
   @Override
-  public void exec(Runtime runtime) {
+  public void exec(Runtime runtime) throws BordeException {
     if (condition.eval(runtime))
       ifTrue.exec(runtime);
     else

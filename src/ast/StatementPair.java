@@ -1,5 +1,7 @@
 package ast;
 
+import Model.BordeException;
+
 public class StatementPair implements Statement {
   Statement stat1;
   Statement stat2;
@@ -10,7 +12,7 @@ public class StatementPair implements Statement {
   }
   
   @Override
-  public void exec(Runtime runtime) {
+  public void exec(Runtime runtime) throws BordeException {
     stat1.exec(runtime);
     stat2.exec(runtime);
   }

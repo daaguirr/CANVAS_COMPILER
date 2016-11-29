@@ -5,12 +5,13 @@ import cup.example.Lexer;
 import java.io.IOException;
 import java.io.File;
 import java.io.FileInputStream;
-import Model.*;
+import ast.*;
+import Model.Color;
+import Model.Direction;
+
   
 parser code {: 
 	protected Lexer lexer;
-	Pluma pluma = new Pluma(); 
-	ITablero tablero = null;
 :}
 
 init with {: 
@@ -36,8 +37,8 @@ terminal Color c;
 terminal Direction d;
 terminal Integer num;
 
-non terminal op;
-non terminal IExpression expr;
+non terminal Statement op;
+non terminal Expression expr;
 
 precedence left SEMI;
 precedence left AND;
@@ -47,24 +48,24 @@ start with op;
 
 op 	::= 	BAJARP {: RESULT = new BajarPluma(); :}
 			| SUBIRP {: RESULT = new SubirPluma();:}
-			| COLORP c:c1 {:RESULT = new CambiarColor();:} 
-			| DIRP d:d1 {: RESULT = new CambiarDireccion();:}
-			| AVAZ num:num1 {:RESULT =  new Azanzar(num);:}
-			| IF expr:e1 THEN BRACKETL op:o1 BRACKETR {:;:}
-			| IF expr:e1 THEN BRACKETL op:o1 BRACKETR ELSE BRACKETL op:o2 BRACKETR {:;:}
-			| WHILE expr:e1 DO BRACKETL op:o1 BRACKETR {:  :}
-			| op:o1 SEMI op:o2 {:;:}
+			| COLORP c:c1 {:RESULT = new CambiarColor(c1);:} 
+			| DIRP d:d1 {: RESULT = new CambiarDireccion(d1);:}
+			| AVAZ num:num1 {:RESULT =  new Avanzar(num1);:}
+			| IF expr:e1 THEN BRACKETL op:o1 BRACKETR {:RESULT = new If(e1,o1);:}
+			| IF expr:e1 THEN BRACKETL op:o1 BRACKETR ELSE BRACKETL op:o2 BRACKETR {:RESULT = new IfElse(e1,o1,o2);:}
+			| WHILE expr:e1 DO BRACKETL op:o1 BRACKETR {: RESULT = new While(e1, o1); :}
+			| op:o1 SEMI op:o2 {:RESULT = new StatementPair(o1,o2);:}
 			;
 
 expr ::= 	TABCOL c:c1 {:RESULT = new TableroCol(c1);:}
 			| BORDE	{:RESULT = new Borde();:}
 			| PLUMADIR d:d1 {:RESULT = new PlumaDir(d1);:}
-			| PLUMACOL c:c1 {:RESULT = new PlumaCol(d2);:}
+			| PLUMACOL c:c1 {:RESULT = new PlumaCol(c1);:}
 			| PLUMAUP {:RESULT = new PlumaUp();:}
 			| PLUMADOWN {:RESULT = new PlumaDown();:}
 			| expr:e1 AND expr:e2 {:RESULT = new And(e1,e2);:}
 			| expr:e1 OR expr:e2 {:RESULT = new Or(e1,e2);:}
-			| NOT expr:e1 {:RESULT = Not(e1);:}
+			| NOT expr:e1 {:RESULT = new Not(e1);:}
 			;
 
             
