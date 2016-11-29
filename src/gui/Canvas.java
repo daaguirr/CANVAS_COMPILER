@@ -1,8 +1,14 @@
 package gui;
 
-import javafx.scene.layout.GridPane;
+import java.util.Observable;
+import java.util.Observer;
 
-public class Canvas extends GridPane {
+import Model.ColorUpdate;
+import Model.Point;
+import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+
+public class Canvas extends GridPane implements Observer{
   private final Cell cell[][];
   
   public Canvas(int width, int height) {
@@ -14,5 +20,18 @@ public class Canvas extends GridPane {
         super.add(cell[row][col], row, col);
       }
     }
+  }
+
+  @Override
+  public void update(Observable o, Object arg) {
+    ColorUpdate update = (ColorUpdate) arg;
+    ColorPalette cp = new ColorPalette();
+    setColor(update.getPto(), cp.convert(update.getColor()));
+    
+    
+  }
+  
+  public void setColor(Point point , Color color){
+    cell[point.x][point.y].setFill(color);
   }
 }
