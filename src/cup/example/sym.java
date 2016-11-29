@@ -16,7 +16,8 @@ public interface sym {
   public static final int WHILE = 3;
   public static final int NOT = 20;
   public static final int PLUMADIR = 14;
-  public static final int num = 26;
+  public static final int N = 24;
+  public static final int num = 27;
   public static final int IF = 2;
   public static final int TABCOL = 12;
   public static final int BRACKETR = 23;
@@ -31,8 +32,8 @@ public interface sym {
   public static final int error = 1;
   public static final int BAJARP = 6;
   public static final int DIRP = 9;
-  public static final int d = 25;
-  public static final int c = 24;
+  public static final int d = 26;
+  public static final int c = 25;
   public static final int PLUMACOL = 15;
   public static final int SUBIRP = 7;
   public static final String[] terminalNames = new String[] {
@@ -60,6 +61,7 @@ public interface sym {
   "SEMI",
   "BRACKETL",
   "BRACKETR",
+  "N",
   "c",
   "d",
   "num"

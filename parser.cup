@@ -32,6 +32,7 @@ scan with {: return lexer.next_token(); :};
 terminal IF, WHILE , THEN , ELSE ,BAJARP, SUBIRP , COLORP, DIRP , DO;
 terminal AVAZ , TABCOL , BORDE , PLUMADIR , PLUMACOL, PLUMAUP, PLUMADOWN ,AND, OR;
 terminal NOT, SEMI, BRACKETL, BRACKETR;
+terminal N;
 		
 terminal Color c;
 terminal Direction d;
@@ -49,7 +50,9 @@ start with op;
 op 	::= 	BAJARP {: RESULT = new BajarPluma(); :}
 			| SUBIRP {: RESULT = new SubirPluma();:}
 			| COLORP c:c1 {:RESULT = new CambiarColor(c1);:} 
+			| COLORP N {:RESULT = new CambiarColor(Color.BLACK);:} 
 			| DIRP d:d1 {: RESULT = new CambiarDireccion(d1);:}
+			| DIRP N {:RESULT = new CambiarDireccion(Direction.NORTH);:}
 			| AVAZ num:num1 {:RESULT =  new Avanzar(num1);:}
 			| IF expr:e1 THEN BRACKETL op:o1 BRACKETR {:RESULT = new If(e1,o1);:}
 			| IF expr:e1 THEN BRACKETL op:o1 BRACKETR ELSE BRACKETL op:o2 BRACKETR {:RESULT = new IfElse(e1,o1,o2);:}
@@ -58,9 +61,12 @@ op 	::= 	BAJARP {: RESULT = new BajarPluma(); :}
 			;
 
 expr ::= 	TABCOL c:c1 {:RESULT = new TableroCol(c1);:}
+			| TABCOL N {:RESULT = new TableroCol(Color.BLACK);:}
 			| BORDE	{:RESULT = new Borde();:}
 			| PLUMADIR d:d1 {:RESULT = new PlumaDir(d1);:}
+			| PLUMADIR N {:RESULT = new PlumaDir(Direction.NORTH);:}
 			| PLUMACOL c:c1 {:RESULT = new PlumaCol(c1);:}
+			| PLUMACOL N {:RESULT = new PlumaCol(Color.BLACK);:}
 			| PLUMAUP {:RESULT = new PlumaUp();:}
 			| PLUMADOWN {:RESULT = new PlumaDown();:}
 			| expr:e1 AND expr:e2 {:RESULT = new And(e1,e2);:}
