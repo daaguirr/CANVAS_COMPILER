@@ -29,6 +29,10 @@ public class Pluma {
     this.direction = direction;
   }
   
+  public Point getPosition() {
+    return position;
+  }
+  
   public void avanzar(int num, ITablero tablero) throws BordeException {
     if (isDown())
       for (int i = 0; i < num; ++i)
