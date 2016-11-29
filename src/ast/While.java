@@ -10,8 +10,8 @@ public class While implements Statement {
   }
   
   @Override
-  public void exec() {
-    while (condition.eval())
-      action.exec();
+  public void exec(Runtime runtime) {
+    while (condition.eval(runtime))
+      action.exec(runtime);
   }
 };

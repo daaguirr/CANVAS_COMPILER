@@ -1,5 +1,5 @@
 package ast;
 
 public interface Statement {
-  void exec();
+  void exec(Runtime runtime);
 }

@@ -9,7 +9,7 @@ public class Or implements Expression {
   }
   
   @Override
-  public boolean eval() {
-    return expr1.eval() || expr2.eval();
+  public boolean eval(Runtime runtime) {
+    return expr1.eval(runtime) || expr2.eval(runtime);
   }
 }

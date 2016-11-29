@@ -10,8 +10,8 @@ public class StatementPair implements Statement {
   }
   
   @Override
-  public void exec() {
-    stat1.exec();
-    stat2.exec();
+  public void exec(Runtime runtime) {
+    stat1.exec(runtime);
+    stat2.exec(runtime);
   }
 }

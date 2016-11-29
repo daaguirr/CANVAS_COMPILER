@@ -1,5 +1,5 @@
 package ast;
 
 public interface Expression {
-  boolean eval();
+  boolean eval(Runtime runtime);
 }

@@ -8,7 +8,7 @@ public class Not implements Expression {
   }
   
   @Override
-  public boolean eval() {
-    return !expr1.eval();
+  public boolean eval(Runtime runtime) {
+    return !expr1.eval(runtime);
   }
 }
