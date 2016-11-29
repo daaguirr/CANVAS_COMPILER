@@ -22,7 +22,8 @@ public class Tablero implements ITablero {
   }
 
   @Override
-  public void setColor(Point point, Color color) {
+  public void setColor(Point point, Color color) throws BordeException {
+    if(!contains(point)) throw new BordeException(point);
     colorOf[point.x][point.y] = color;
   }
 
