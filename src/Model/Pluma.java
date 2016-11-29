@@ -7,7 +7,7 @@ public class Pluma {
   private Point direction;
   
   public Pluma() {
-    position = new Point(1, 1);
+    position = new Point(0, 0);
     color = Color.WHITE;
     isUp = true;
     direction = Direction.EAST;
