@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Cell extends Rectangle {
-  private static final int SIZE = 24;
+  private static final int SIZE = 16;
   public static final int PIXELS = SIZE + 1;
   private Color fill = Color.LIGHTGRAY;
   
