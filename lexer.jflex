@@ -101,6 +101,7 @@ num = 0 | [1-9][0-9]*
 	"do"				{ return symbol("DO",sym.DO);				}
 	"bajar-pluma"		{ return symbol("BAJARP",sym.BAJARP);		}
 	"levantar-pluma"	{ return symbol("SUBIRP",sym.SUBIRP);		}
+	"tablero-col"		{ return symbol("TABCOL", sym.TABCOL);		}
 	"color-pluma"		{ return symbol("COLORP",sym.COLORP);		}
 	"direccion-pluma"	{ return symbol("DIRP",sym.DIRP);			}
 	"avanzar"			{ return symbol("AVAZ",sym.AVAZ);			}
@@ -114,9 +115,10 @@ num = 0 | [1-9][0-9]*
 	"borde"				{ return symbol("BORDE",sym.BORDE);			}
 	"{"					{ return symbol("BRACKETL",sym.BRACKETL);  	}
 	"}"					{ return symbol("BRACKETR" ,sym.BRACKETR);	}
+	"N"					{ return symbol("N" ,sym.N);	}
 	{Number}     		{ return symbol("num", sym.num, Integer.parseInt(yytext())); }
-	{Direction}			{ return symbol("c",sym.c, new Color(yytext().charAt(0)));	}
-	{Color}				{ return symbol("d",sym.d, new Direction(yytext().charAt(0)));}
+	{Color}				{ return symbol("c",sym.c, new Color(yytext().charAt(0)));	}
+	{Direction}			{ return symbol("d",sym.d, new Direction(yytext().charAt(0)));}
 }
 
 

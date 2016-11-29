@@ -1,1 +1,5 @@
-while borde do {bajar-pluma}
+color-pluma V;
+bajar-pluma;
+avanzar 49
+
+
