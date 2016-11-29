@@ -22,4 +22,8 @@ public class Color {
     Color other = (Color) o;
     return this.id == other.id;
   }
+
+  public char toChar() {
+    return id;
+  }
 }

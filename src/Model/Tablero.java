@@ -30,4 +30,15 @@ public class Tablero implements ITablero {
   public Color getColor(Point point) {
     return colorOf[point.x][point.y];
   }
+  
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    for (int row = 0; row < height; ++row) {
+      for (int col = 0; col < width; ++col)
+        sb.append(colorOf[col][row].toChar());
+      sb.append(System.lineSeparator());
+    }
+    return sb.toString();
+  }
 }
