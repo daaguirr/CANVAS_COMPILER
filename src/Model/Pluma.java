@@ -43,12 +43,12 @@ public class Pluma {
       throw new BordeException(position);
   }
   
-  public boolean hasColor(char c) {
-    return color.equals(new Color(c));
+  public boolean hasColor(Color desiredColor) {
+    return color.equals(desiredColor);
   }
   
-  public boolean hasDirection(char d) {
-    return direction.equals(new Direction(d));
+  public boolean hasDirection(Direction desiredDirection) {
+    return direction.equals(desiredDirection);
   }
   
   public boolean isUp() {
